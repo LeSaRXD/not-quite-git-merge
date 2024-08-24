@@ -4,3 +4,9 @@ pub fn hash(plain: impl AsRef<str>) -> u128 {
 		hash.wrapping_mul(P).wrapping_add(byte as u128 + 1)
 	})
 }
+
+// since `len()` is constant time, we can add it to avoid intersections without a big performance hit
+pub fn hash_with_len(plain: impl AsRef<str>) -> (u128, usize) {
+	let len = plain.as_ref().len();
+	(hash(plain), len)
+}
